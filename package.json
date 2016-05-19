@@ -1,0 +1,26 @@
+{
+  "name": "react-themeit",
+  "version": "1.0.0",
+  "description": "An easy way to theme your components using css modules and js css objects thanks to aphrodite. Also works with asynchronously loaded styles!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/flipace/react-themeit.git"
+  },
+  "keywords": [
+    "react",
+    "themes",
+    "theming",
+    "css",
+    "modules"
+  ],
+  "author": "Patrick Neschkudla",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/flipace/react-themeit/issues"
+  },
+  "homepage": "https://github.com/flipace/react-themeit#readme"
+}
