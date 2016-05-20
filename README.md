@@ -42,7 +42,7 @@ const MyComponent = props => (
 export default themeit(themeOptions)(MyComponent);
 ```
 
-** Component Usage **
+**Component Usage**
 
 ```Javascript
 import MyComponent from './MyComponent';
