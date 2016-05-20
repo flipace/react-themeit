@@ -20,13 +20,15 @@ npm i -S react-themeit
 **Component Declaration**
 
 ```Javascript
+import { themeit } from 'react-themeit';
+
 const themeOptions = {
   base: cb => require(['./base.less'], cb),
   themes: {
     blue: cb => require(['./themes/blue.less'], cb),
     big: cb => require(['./themes/big.less'], cb),
     italic: {
-      element: {
+      label: {
         fontStyle: 'italic'
       }
     }
@@ -50,7 +52,7 @@ import MyComponent from './MyComponent';
 export default () => (
   <MyComponent
     theme="blue big italic"
-    styles={{ element: { textDecoration: 'underline' } }}
+    styles={{ label: { textDecoration: 'underline' } }}
     addFiles={cb => require(['./additionalStyles.less'], cb) }
   />
 );
@@ -71,6 +73,30 @@ A component which is wrapped with *themeit* accepts these additional props:
 
 The target component will receive the combined style classes in a property called `styles`.
 It will also receive a prop named `themeit` which contains all options you passed to *themeit* and a function `setTheme(name)` which you can invoke to change the current theme of the component.
+
+### FAQ
+
+#### Does it work with hot reloading / HMR ?
+Yes. Configuring async css files for HMR require a bit of more code though. To make it easier and shorter, *react-themeit* exports a `hot(...)` function which can be used.
+
+Check this snippet for example:
+
+```Javascript
+import { themeit, hot } from 'react-themeit';
+
+const themeOptions = {
+  base: cb => require(['./base.less'], s => {
+    hot(s, cb, c => module.hot.accept('./base.less', c))
+  }),
+  themes: {
+    blue: cb => require(['./themes/blue.less'], cb)
+  }
+};
+```
+
+In this case, only the `base` .less will be hot reloadable.
+The `hot` function automatically checks whether module.hot is
+defined and only enables HMR if it is.
 
 ### Roadmap
 - implement automatic generation of react-storybook stories

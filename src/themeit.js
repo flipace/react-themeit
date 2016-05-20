@@ -103,7 +103,12 @@ export default function themeit(opts) {
         const stylesToLoad = styles.length;
         const loadedStyles = [];
 
-        const styleLoaded = (s) => {
+        const styleLoaded = (s, hot = false) => {
+          if (hot) {
+            this.loadTheme(this.props);
+            return;
+          }
+
           loadedStyles.push(s);
 
           if (loadedStyles.length >= stylesToLoad) this.setStyles(...loadedStyles);
