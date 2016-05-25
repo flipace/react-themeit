@@ -55,6 +55,8 @@ export default function themeit(opts) {
       constructor(props) {
         super(props);
 
+        this._isMounted = false;
+
         this.state = {
           styles: {},
           loadedTheme: false,
@@ -68,6 +70,8 @@ export default function themeit(opts) {
       };
 
       componentDidMount() {
+        this._isMounted = true;
+
         this.loadTheme(this.props);
       }
 
@@ -77,8 +81,14 @@ export default function themeit(opts) {
         }
       }
 
+      componentWillUnmount() {
+        this._isMounted = false;
+      }
+
       setStyles = (...classes) => {
-        this.setState({ styles: mergeStyles(...classes), loadedTheme: true });
+        if (this._isMounted) {
+          this.setState({ styles: mergeStyles(...classes), loadedTheme: true });
+        }
       };
 
       getthemeitProps() {
