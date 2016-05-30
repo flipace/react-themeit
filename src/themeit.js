@@ -102,11 +102,12 @@ export default function themeit(opts) {
 
       loadTheme(props) {
         const { theme } = props;
-        const styles = [
-          ...parseThemes(theme, opts.themes),
-        ];
+        let styles = [];
 
         if (opts.base) styles.push(opts.base);
+
+        styles = styles.concat(parseThemes(theme, opts.themes));
+
         if (props.addFiles) styles.push(props.addFiles);
         if (props.styles) styles.push(props.styles);
 
