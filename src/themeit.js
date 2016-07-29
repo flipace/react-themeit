@@ -34,7 +34,7 @@ export default function themeit(opts) {
          // name of the theme to use
         theme: PropTypes.oneOfType([
           PropTypes.string,
-          PropTypes.boolean,
+          PropTypes.bool,
         ]),
         // optional jscss styles to be added
         // (will be appended to head with aphrodite)

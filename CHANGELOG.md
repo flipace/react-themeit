@@ -1,5 +1,8 @@
 # Change Log
 
+### v0.1.4
+- fixes incorrect react PropType
+
 ### v0.1.3
 - fixes cascading issue of localized classNames
 
