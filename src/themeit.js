@@ -141,16 +141,20 @@ export default function themeit(opts) {
       }
 
       render() {
-        const { styles } = this.state;
+        if (this.state.loadedTheme) {
+          const { styles } = this.state;
 
-        return createElement(
-          TargetComponent,
-          {
-            ...this.props,
-            styles,
-            themeit: this.getthemeitProps(),
-          }
-        );
+          return createElement(
+            TargetComponent,
+            {
+              ...this.props,
+              styles,
+              themeit: this.getthemeitProps(),
+            }
+          );
+        }
+
+        return null;
       }
     }
 
