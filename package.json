@@ -1,6 +1,6 @@
 {
   "name": "react-themeit",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "description": "themeit makes it easy to create and use different themes for your react components while using CSS Modules or JS style objects.",
   "repository": {
     "type": "git",
@@ -61,7 +61,11 @@
     "npm": "^3.0.0"
   },
   "babel": {
-    "presets": ["es2015", "stage-2", "react"],
+    "presets": [
+      "es2015",
+      "stage-2",
+      "react"
+    ],
     "plugins": [
       "transform-class-properties"
     ]
