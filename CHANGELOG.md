@@ -1,5 +1,11 @@
 # Change Log
 
+### v0.2.1
+- bump aphrodite peerDep to 0.6.0
+
+### v0.2.0
+- fix flickering issue (#1 by @visuallization)
+
 ### v0.1.4
 - fixes incorrect react PropType
 
