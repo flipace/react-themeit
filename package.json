@@ -1,6 +1,6 @@
 {
   "name": "react-themeit",
-  "version": "0.2.1",
+  "version": "1.0.0",
   "description": "themeit makes it easy to create and use different themes for your react components while using CSS Modules or JS style objects.",
   "repository": {
     "type": "git",
