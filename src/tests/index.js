@@ -30,4 +30,21 @@ describe('themeit', () => {
     expect(html).to.contain('label_');
     expect(html.match(/boldText_/g)).to.have.length(1);
   });
+
+  it('should accept multiple files passed by addFiles property function', () => {
+    const comp = mount(
+      <ComponentA
+        theme="black"
+        addFiles={cb => cb(
+          require('./styles/test1'),
+          require('./styles/test2')
+        )}
+      />
+    );
+    const html = comp.html();
+
+    expect(html).to.contain('container_1');
+    expect(html).to.contain('container_2');
+    expect(html).to.contain('label_');
+  });
 });

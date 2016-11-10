@@ -142,13 +142,22 @@ export default function themeit(opts) {
         } else {
           const loadedStyles = [];
 
-          const styleLoaded = (s, hot = false) => {
-            if (hot) {
-              this.loadTheme(this.props);
-              return;
+          const styleLoaded = (...addedStyles) => {
+            const len = addedStyles.length;
+            const hasHot = len > 0 && typeof addedStyles[len - 1] === 'boolean';
+
+            if (hasHot) {
+              if (addedStyles[len - 1]) {
+                this.loadTheme(this.props);
+                return;
+              }
             }
 
-            loadedStyles.push(s);
+            addedStyles.forEach((s, i) => {
+              if (i < len - (hasHot ? 2 : 0)) {
+                loadedStyles.push(s);
+              }
+            });
 
             if (loadedStyles.length >= stylesToLoad) this.setStyles(...loadedStyles);
           };

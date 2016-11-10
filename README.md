@@ -17,6 +17,8 @@ npm i -S react-themeit
 
 ## Usage
 
+(*examples assume usage of webpack*)
+
 **Component Declaration**
 
 ```Javascript
@@ -53,7 +55,7 @@ export default () => (
   <MyComponent
     theme="blue big italic"
     styles={{ label: { textDecoration: 'underline' } }}
-    addFiles={cb => require(['./additionalStyles.less'], cb) }
+    addFiles={cb => require(['./additionalStyles.less', './someMoreStyles.css'], cb) }
   />
 );
 ```
