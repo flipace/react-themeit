@@ -12,7 +12,8 @@ import mergeStyles from './functions/mergeStyles';
  *
  * themeit({
  *  default: 'blue',
- * 	base: cb => require(['path/to/base.less'], cb)
+ * 	base: cb => require(['path/to/base.less'], cb),
+ * 	mergeContext: false,
  * 	themes: {
  * 		blue: cb => require(['path/to/themes/blue.less'], cb)
  * 		italic: {
@@ -24,9 +25,15 @@ import mergeStyles from './functions/mergeStyles';
  * })(MyComponent)
  */
 export default function themeit(opts) {
-  return TargetComponent => {
-    invariant(opts.themes, `No 'themes' specified for ${TargetComponent}!`);
+  const options = {
+    mergeContext: false,
+    themes: {},
+    ...opts,
+  };
 
+  const themeCount = Object.keys(options.themes).length;
+
+  return TargetComponent => {
     class ThemeIt extends Component {
       static displayName = `ThemeIt(${TargetComponent.displayName})`;
 
@@ -45,15 +52,19 @@ export default function themeit(opts) {
       };
 
       static defaultProps = {
-        theme: opts.default || false,
+        theme: options.default || false,
+      }
+
+      static contextTypes = {
+        styles: PropTypes.object,
       }
 
       static childContextTypes = {
         styles: PropTypes.object,
       };
 
-      constructor(props) {
-        super(props);
+      constructor(props, context) {
+        super(props, context);
 
         this._isMounted = false;
 
@@ -63,11 +74,9 @@ export default function themeit(opts) {
         };
       }
 
-      getChildContext = () => {
-        return {
-          styles: this.state.styles,
-        };
-      };
+      getChildContext = () => ({
+        styles: this.state.styles,
+      });
 
       componentDidMount() {
         this._isMounted = true;
@@ -75,8 +84,14 @@ export default function themeit(opts) {
         this.loadTheme(this.props);
       }
 
-      componentDidUpdate(prevProps) {
-        if (prevProps.theme !== this.props.theme) {
+      componentDidUpdate(prevProps, prevState, prevContext) {
+        if (
+          prevProps.theme !== this.props.theme ||
+          (
+            options.mergeContext &&
+            JSON.stringify(prevContext.styles) !== JSON.stringify(this.context.styles)
+          )
+        ) {
           this.loadTheme(this.props);
         }
       }
@@ -87,63 +102,77 @@ export default function themeit(opts) {
 
       setStyles = (...classes) => {
         if (this._isMounted) {
+          const { mergeContext } = options;
+
+          // if mergeContext is true, and we have styles in context, add them to our styles array
+          if (mergeContext && this.context.styles) {
+            classes.push(this.context.styles);
+          }
+
           this.setState({ styles: mergeStyles(...classes), loadedTheme: true });
         }
       };
 
-      getthemeitProps() {
-        const loadTheme = this.loadTheme.bind(this);
+      getthemeitProps = () => ({
+        setTheme: (theme) => this.loadTheme({ ...this.props, theme }),
+        ...options,
+      });
 
-        return {
-          setTheme: (theme) => { loadTheme({ ...this.props, theme }); },
-          ...opts,
-        };
-      }
-
-      loadTheme(props) {
+      loadTheme = (props) => {
+        const { base, themes } = options;
         const { theme } = props;
         let styles = [];
 
-        if (opts.base) styles.push(opts.base);
+        // if base styles are defined, push them to our array
+        if (base) styles.push(base);
 
-        styles = styles.concat(parseThemes(theme, opts.themes));
+        // add styles from defined themes to our styles array
+        styles = styles.concat(parseThemes(theme, themes));
 
+        // if addFiles is defined, push the addFiles function to the styles array
         if (props.addFiles) styles.push(props.addFiles);
+
+        // if a styles object is defined in props, add it also to our styles array
         if (props.styles) styles.push(props.styles);
 
         const stylesToLoad = styles.length;
-        const loadedStyles = [];
 
-        const styleLoaded = (s, hot = false) => {
-          if (hot) {
-            this.loadTheme(this.props);
-            return;
-          }
+        if (stylesToLoad <= 0) {
+          this.setStyles();
+        } else {
+          const loadedStyles = [];
 
-          loadedStyles.push(s);
+          const styleLoaded = (s, hot = false) => {
+            if (hot) {
+              this.loadTheme(this.props);
+              return;
+            }
 
-          if (loadedStyles.length >= stylesToLoad) this.setStyles(...loadedStyles);
-        };
+            loadedStyles.push(s);
 
-        styles.forEach(style => {
-          invariant(style, `${TargetComponent.displayName} has no theme "${theme}"!`);
+            if (loadedStyles.length >= stylesToLoad) this.setStyles(...loadedStyles);
+          };
 
-          switch (typeof style) {
-            case 'function':
-              style(styleLoaded);
-              break;
-            case 'object':
-              styleLoaded(addJsCss(style));
-              break;
-            default: break;
-          }
-        });
+          styles.forEach(style => {
+            invariant(style, `${TargetComponent.displayName} has no theme "${theme}"!`);
+
+            switch (typeof style) {
+              case 'function':
+                style(styleLoaded);
+                break;
+              case 'object':
+                styleLoaded(addJsCss(style));
+                break;
+              default: break;
+            }
+          });
+        }
       }
 
       render() {
-        if (this.state.loadedTheme) {
-          const { styles } = this.state;
+        const { loadedTheme, styles } = this.state;
 
+        if (loadedTheme || themeCount <= 0) {
           return createElement(
             TargetComponent,
             {

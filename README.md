@@ -64,7 +64,7 @@ export default () => (
 - `themes` *(object)*: an object in which the *keys* represent *theme names* and the values can either be a function which should return a localized class map like { container: 'container_38h2f02h' } or a js style object like { container: { backgroundColor: '#000' } }
 - [`default`] *(string)*: name of a default theme
 - [`base`] *(func)*: base styles which should always be applied
-
+- [`mergeContext (default: false)`] *(boolean)*: whether styles contexts should be merged
 `})`
 
 A component which is wrapped with *themeit* accepts these additional props:

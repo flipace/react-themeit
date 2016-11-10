@@ -2,41 +2,32 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { expect } from 'chai';
 
-import themeit from '../themeit';
+import ComponentA from './ComponentA';
+import ComponentC from './ComponentC';
 
 const { describe, it } = global;
 
-const themeOptions = {
-  themes: {
-    black: {
-      container: {
-        backgroundColor: '#000000',
-      },
-      label: {
-        fontFamily: 'Arial',
-      },
-    },
-  },
-};
-
-const Demo = (props) => (
-  <div className={props.styles.container}>
-    <label className={props.styles.label}>A label.</label>
-  </div>
-);
-
-Demo.displayName = 'Demo';
-Demo.propTypes = {
-  styles: React.PropTypes.object,
-};
-
 describe('themeit', () => {
-  it('should pass the correct classes', () => {
-    const Wrapped = themeit(themeOptions)(Demo);
-    const comp = mount(<Wrapped theme="black" />);
+  it('should pass correct classes and merge styles context for nested themed components', () => {
+    const comp = mount(<ComponentA theme="black" styles={{ boldText: { fontSize: 20 } }} />);
     const html = comp.html();
 
     expect(html).to.contain('container_');
     expect(html).to.contain('label_');
+    expect(html).to.contain('boldText_');
+  });
+
+  it('should not merge existing styles context if mergeContext=false is set in themeopts', () => {
+    const MergedComp = () => (
+      <ComponentA theme="black" styles={{ boldText: { fontSize: 20 } }} >
+        <ComponentC />
+      </ComponentA>
+    );
+    const comp = mount(<MergedComp />);
+    const html = comp.html();
+
+    expect(html).to.contain('container_');
+    expect(html).to.contain('label_');
+    expect(html.match(/boldText_/g)).to.have.length(1);
   });
 });
