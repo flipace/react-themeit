@@ -1,5 +1,9 @@
 # Change Log
 
+### v1.0.0
+- **enhanced** ```addFiles``` now can actually handle multiple files (#3)
+- **new** ```mergeContext``` option (#2)
+
 ### v0.2.1
 - bump aphrodite peerDep to 0.6.0
 
