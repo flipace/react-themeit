@@ -1,4 +1,7 @@
 # themeit - react & css modules theming made easy
+[![NPM Version](https://img.shields.io/npm/v/react-themeit.svg)](https://npmjs.com/package/react-themeit)
+[![Build Status](https://travis-ci.org/flipace/react-themeit.svg?branch=master)](https://travis-ci.org/flipace/react-themeit)
+[![License](https://img.shields.io/npm/l/react-themeit.svg)](https://npmjs.com/package/react-themeit)
 
 themeit makes it easy to create and use different themes
 for your react components while using CSS Modules or JS style objects.
