@@ -29,6 +29,6 @@ storiesOf('Label', module)
 .add('additional .css file', () => (
   <Label
     theme="blue"
-    addFiles={cb => require(['./additional.css'], cb)}
+    addStyleFiles={cb => require(['./additional.css'], cb)}
   >Hello world.</Label>
 ));

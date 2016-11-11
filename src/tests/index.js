@@ -31,11 +31,11 @@ describe('themeit', () => {
     expect(html.match(/boldText_/g)).to.have.length(1);
   });
 
-  it('should accept multiple files passed by addFiles property function', () => {
+  it('should accept multiple files passed by addStyleFiles property function', () => {
     const comp = mount(
       <ComponentA
         theme="black"
-        addFiles={cb => cb(
+        addStyleFiles={cb => cb(
           require('./styles/test1'),
           require('./styles/test2')
         )}

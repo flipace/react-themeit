@@ -1,5 +1,8 @@
 # Change Log
 
+### v1.1.0
+- **enhanced** ```addFiles``` property replace with ```addStyleFiles```, as it's more self-explanatory (#4 by @BonneVoyager)
+
 ### v1.0.0
 - **enhanced** ```addFiles``` now can actually handle multiple files (#3)
 - **new** ```mergeContext``` option (#2)
