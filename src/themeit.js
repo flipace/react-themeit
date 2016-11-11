@@ -131,7 +131,7 @@ export default function themeit(opts) {
 
         // if addStyleFiles is defined, push the addStyleFiles function to the styles array
         if (props.addStyleFiles) styles.push(props.addStyleFiles);
-        console.log(props)
+
         // if addStyleFiles is defined, push the addStyleFiles function to the styles array
         if (props.addFiles) {
           console.warn("(react-themeit) 'addFiles' is deprecated and will be removed " +
