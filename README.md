@@ -58,7 +58,7 @@ export default () => (
   <MyComponent
     theme="blue big italic"
     styles={{ label: { textDecoration: 'underline' } }}
-    addFiles={cb => require(['./additionalStyles.less', './someMoreStyles.css'], cb) }
+    addStyleFiles={cb => require(['./additionalStyles.less', './someMoreStyles.css'], cb) }
   />
 );
 ```
@@ -73,7 +73,7 @@ export default () => (
 `})`
 
 A component which is wrapped with *themeit* accepts these additional props:
-- `addFiles` *(func)*: a function to pass additional theme classes to the component
+- `addStyleFiles` *(func)*: a function to pass additional theme classes to the component
 - `styles` *(object)*: additional js css styles to be passed to the component (will be processed with *aphrodite*)
 
 The target component will receive the combined style classes in a property called `styles`.
@@ -137,9 +137,9 @@ You might want to define themes / style information for the keys
 with themeit. If you were to use the calculator widget however,
 you'd also want to pass new/additional style information for the keys to the calculator widget.
 
-One way to deal with this would be to accept a separate prop like ```stylesForKeys``` or ```addFilesForKeys``` and pass these props down to each individual key. However, this sucks.
+One way to deal with this would be to accept a separate prop like ```stylesForKeys``` or ```addStyleFilesForKeys``` and pass these props down to each individual key. However, this sucks.
 
-Instead, you may just use the ```addFiles``` prop to pass style information for the whole widget + its themeable child components. And utilize the ```mergeContext``` option to merge all style information for the Key components.
+Instead, you may just use the ```addStyleFiles``` prop to pass style information for the whole widget + its themeable child components. And utilize the ```mergeContext``` option to merge all style information for the Key components.
 
 **b)** Ignore parent styles information and create a new styles context from the component
 

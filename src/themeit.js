@@ -48,7 +48,7 @@ export default function themeit(opts) {
         styles: PropTypes.object,
         // optional css imports to be added
         // (must be a function which calls cb(classMap1, classMap2))
-        addFiles: PropTypes.func,
+        addStyleFiles: PropTypes.func,
       };
 
       static defaultProps = {
@@ -129,8 +129,15 @@ export default function themeit(opts) {
         // add styles from defined themes to our styles array
         styles = styles.concat(parseThemes(theme, themes));
 
-        // if addFiles is defined, push the addFiles function to the styles array
-        if (props.addFiles) styles.push(props.addFiles);
+        // if addStyleFiles is defined, push the addStyleFiles function to the styles array
+        if (props.addStyleFiles) styles.push(props.addStyleFiles);
+        console.log(props)
+        // if addStyleFiles is defined, push the addStyleFiles function to the styles array
+        if (props.addFiles) {
+          console.warn("(react-themeit) 'addFiles' is deprecated and will be removed " +
+            "in the next major version. Use 'addStyleFiles' instead.");
+          styles.push(props.addFiles);
+        }
 
         // if a styles object is defined in props, add it also to our styles array
         if (props.styles) styles.push(props.styles);
