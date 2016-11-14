@@ -49,10 +49,13 @@ export default function themeit(opts) {
         // optional css imports to be added
         // (must be a function which calls cb(classMap1, classMap2))
         addStyleFiles: PropTypes.func,
+        // should context be merged?
+        mergeContext: PropTypes.bool,
       };
 
       static defaultProps = {
         theme: options.default || false,
+        mergeContext: false,
       }
 
       static contextTypes = {
@@ -88,7 +91,7 @@ export default function themeit(opts) {
         if (
           prevProps.theme !== this.props.theme ||
           (
-            options.mergeContext &&
+            (options.mergeContext || this.props.mergeContext) &&
             JSON.stringify(prevContext.styles) !== JSON.stringify(this.context.styles)
           )
         ) {
@@ -102,7 +105,7 @@ export default function themeit(opts) {
 
       setStyles = (...classes) => {
         if (this._isMounted) {
-          const { mergeContext } = options;
+          const mergeContext = options.mergeContext || this.props.mergeContext;
 
           // if mergeContext is true, and we have styles in context, add them to our styles array
           if (mergeContext && this.context.styles) {
@@ -134,6 +137,7 @@ export default function themeit(opts) {
 
         // if addStyleFiles is defined, push the addStyleFiles function to the styles array
         if (props.addFiles) {
+          // eslint-disable-next-line
           console.warn("(react-themeit) 'addFiles' is deprecated and will be removed " +
             "in the next major version. Use 'addStyleFiles' instead.");
           styles.push(props.addFiles);
