@@ -1,5 +1,8 @@
 # Change Log
 
+### v1.2.0
+- **enhanced** allow passing ```mergeContext``` as a prop to themed component
+
 ### v1.1.0
 - **enhanced** ```addFiles``` property replace with ```addStyleFiles```, as it's more self-explanatory (#4 by @BonneVoyager)
 
