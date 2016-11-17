@@ -1,5 +1,8 @@
 # Change Log
 
+### v1.2.1
+- **changed** when merging context styles, put existing context styles at the beginning
+
 ### v1.2.0
 - **enhanced** allow passing ```mergeContext``` as a prop to themed component
 
