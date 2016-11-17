@@ -109,7 +109,7 @@ export default function themeit(opts) {
 
           // if mergeContext is true, and we have styles in context, add them to our styles array
           if (mergeContext && this.context.styles) {
-            classes.push(this.context.styles);
+            classes.unshift(this.context.styles);
           }
 
           this.setState({ styles: mergeStyles(...classes), loadedTheme: true });
