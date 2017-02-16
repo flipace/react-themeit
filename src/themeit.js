@@ -121,6 +121,10 @@ export default function themeit(opts) {
         ...options,
       });
 
+      getExposedComponent = () => {
+        return this.targetComponent;
+      }
+
       loadTheme = (props) => {
         const { base, themes } = options;
         const { theme } = props;
@@ -199,6 +203,7 @@ export default function themeit(opts) {
               ...this.props,
               styles,
               themeit: this.getthemeitProps(),
+              ref: (targetComponent) => { this.targetComponent = targetComponent; },
             }
           );
         }
