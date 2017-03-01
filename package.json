@@ -51,7 +51,7 @@
     "style-loader": "^0.13.2"
   },
   "peerDependencies": {
-    "aphrodite": "^0.6.0",
+    "aphrodite": "^1.1.0",
     "react": "^0.14.7 || ^15.0.0"
   },
   "dependencies": {
