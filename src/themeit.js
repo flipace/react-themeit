@@ -12,16 +12,16 @@ import mergeStyles from './functions/mergeStyles';
  *
  * themeit({
  *  default: 'blue',
- * 	base: cb => require(['path/to/base.less'], cb),
- * 	mergeContext: false,
- * 	themes: {
- * 		blue: cb => require(['path/to/themes/blue.less'], cb)
- * 		italic: {
- * 			myLabel: {
- * 				fontStyle: 'italic'
- * 			}
- * 		}
- * 	}
+ *  base: cb => require(['path/to/base.less'], cb),
+ *  mergeContext: false,
+ *  themes: {
+ *    blue: cb => require(['path/to/themes/blue.less'], cb)
+ *    italic: {
+ *      myLabel: {
+ *        fontStyle: 'italic'
+ *      }
+ *    }
+ *  }
  * })(MyComponent)
  */
 export default function themeit(opts) {
@@ -33,7 +33,7 @@ export default function themeit(opts) {
 
   const themeCount = Object.keys(options.themes).length;
 
-  return TargetComponent => {
+  return (TargetComponent) => {
     class ThemeIt extends Component {
       static displayName = `ThemeIt(${TargetComponent.displayName})`;
 
@@ -45,10 +45,10 @@ export default function themeit(opts) {
         ]),
         // optional jscss styles to be added
         // (will be appended to head with aphrodite)
-        styles: PropTypes.object,
+        styles: PropTypes.object, // eslint-disable-line
         // optional css imports to be added
         // (must be a function which calls cb(classMap1, classMap2))
-        addStyleFiles: PropTypes.func,
+        addStyleFiles: PropTypes.func, // eslint-disable-line
         // should context be merged?
         mergeContext: PropTypes.bool,
       };
@@ -117,7 +117,7 @@ export default function themeit(opts) {
       };
 
       getthemeitProps = () => ({
-        setTheme: (theme) => this.loadTheme({ ...this.props, theme }),
+        setTheme: theme => this.loadTheme({ ...this.props, theme }),
         ...options,
       });
 
@@ -177,7 +177,7 @@ export default function themeit(opts) {
             if (loadedStyles.length >= stylesToLoad) this.setStyles(...loadedStyles);
           };
 
-          styles.forEach(style => {
+          styles.forEach((style) => {
             invariant(style, `${TargetComponent.displayName} has no theme "${theme}"!`);
 
             switch (typeof style) {
@@ -204,7 +204,7 @@ export default function themeit(opts) {
               styles,
               themeit: this.getthemeitProps(),
               ref: (targetComponent) => { this.targetComponent = targetComponent; },
-            }
+            },
           );
         }
 
