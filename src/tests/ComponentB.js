@@ -6,7 +6,7 @@ const themeOptions = {
   mergeContext: true,
 };
 
-const ComponentB = (props) => (
+const ComponentB = props => (
   <div className={props.styles.container}>
     <label className={props.styles.label}>ComponentB label.</label>
     <span className={props.styles.boldText}>Some bold text.</span>

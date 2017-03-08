@@ -15,7 +15,7 @@ const themeOptions = {
   },
 };
 
-const ComponentA = (props) => (
+const ComponentA = props => (
   <div className={props.styles.container}>
     <label className={props.styles.label}>ComponentA</label>
     <ComponentB />

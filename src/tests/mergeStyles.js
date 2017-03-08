@@ -18,16 +18,16 @@ for (let i = 0; i <= 50; i++) {
 
 describe('mergeStyles', () => {
   it('should return an object', () => {
-    const res = mergeStyles.apply(null, styleObjects);
+    const res = mergeStyles(...styleObjects);
     expect(res).to.be.an('object');
   });
   it('should contain all keys from the passed objects', () => {
-    const res = mergeStyles.apply(null, styleObjects);
+    const res = mergeStyles(...styleObjects);
     expect(res).to.contain.all.keys(classes);
     expect(Object.keys(res).length).to.be.within(1, classes.length);
   });
   it('should concatenate all strings from equal keys with whitespace separator', () => {
-    const res = mergeStyles.apply(null, styleObjects);
+    const res = mergeStyles(...styleObjects);
     _.each(res, (val, key) => {
       expect(val).to.contain('_');
       expect(val).to.contain(' ');

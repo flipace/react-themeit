@@ -6,7 +6,7 @@ const themeOptions = {
   mergeContext: false,
 };
 
-const ComponentC = (props) => (
+const ComponentC = props => (
   <div className={props.styles.test1}>
     <label className={props.styles.test2}>ComponentC label</label>
     <ComponentB />

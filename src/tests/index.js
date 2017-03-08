@@ -37,9 +37,9 @@ describe('themeit', () => {
         theme="black"
         addStyleFiles={cb => cb(
           require('./styles/test1'),
-          require('./styles/test2')
+          require('./styles/test2'),
         )}
-      />
+      />,
     );
     const html = comp.html();
 

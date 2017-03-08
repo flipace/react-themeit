@@ -6,7 +6,7 @@ export default function mergeStyles(...themes) {
   return themes.reduce((acc, theme) => {
     const classList = Object.keys(theme);
 
-    classList.forEach(className => {
+    classList.forEach((className) => {
       const localName = theme[className];
 
       // check if this className is already in the merge
