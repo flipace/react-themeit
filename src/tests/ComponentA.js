@@ -1,8 +1,9 @@
 import React from 'react';
 import ComponentB from './ComponentB';
-import { themeit } from '../index.js';
+import { themeit } from '../index';
 
 const themeOptions = {
+  base: cb => cb(require('./styles/test1')),
   themes: {
     black: {
       container: {

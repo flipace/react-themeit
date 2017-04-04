@@ -2,6 +2,8 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { expect } from 'chai';
 
+import themeit from '../themeit';
+
 import ComponentA from './ComponentA';
 import ComponentC from './ComponentC';
 
@@ -46,5 +48,40 @@ describe('themeit', () => {
     expect(html).to.contain('container_1');
     expect(html).to.contain('container_2');
     expect(html).to.contain('label_');
+  });
+
+  it('should always apply classnames in the order base => theme => passed', () => {
+    let html;
+
+    const BaseComponent = ({ styles }) => (<div className={styles.container}>I'm react-themeit'</div>);
+
+    const options = {
+      base: cb => cb(require('./styles/test1')),
+      themes: {
+        red: cb => cb(require('./styles/test2'))
+      }
+    };
+
+    const Themed = themeit(options)(BaseComponent);
+    const element = <Themed theme="red" />;
+
+    const comp = mount(element);
+
+    html = comp.html();
+
+    expect(html).to.contain('container_1 container_2');
+
+    comp.setProps({ theme: '' });
+
+    html = comp.html();
+
+    expect(html).to.contain('container_1');
+    expect(html).not.to.contain('container_2');
+
+    comp.setProps({ theme: 'red' });
+
+    html = comp.html();
+
+    expect(html).to.contain('container_1 container_2');
   });
 });

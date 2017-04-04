@@ -103,7 +103,7 @@ export default function themeit(opts) {
         this._isMounted = false;
       }
 
-      setStyles = (...classes) => {
+      setStyles = (classes = []) => {
         if (this._isMounted) {
           const mergeContext = options.mergeContext || this.props.mergeContext;
 
@@ -121,9 +121,11 @@ export default function themeit(opts) {
         ...options,
       });
 
-      getExposedComponent = () => {
-        return this.targetComponent;
-      }
+      /**
+       * Allows you to access the wrapped component
+       * @return {ReactElement}
+       */
+      getComponent = () => this.targetComponent;
 
       loadTheme = (props) => {
         const { base, themes } = options;
@@ -134,10 +136,15 @@ export default function themeit(opts) {
         if (base) styles.push(base);
 
         // add styles from defined themes to our styles array
-        styles = styles.concat(parseThemes(theme, themes));
+        styles = [
+          ...styles,
+          ...parseThemes(theme, themes),
+        ];
 
         // if addStyleFiles is defined, push the addStyleFiles function to the styles array
-        if (props.addStyleFiles) styles.push(props.addStyleFiles);
+        if (props.addStyleFiles) {
+          styles.push(props.addStyleFiles);
+        }
 
         // if addStyleFiles is defined, push the addStyleFiles function to the styles array
         if (props.addFiles) {
@@ -157,35 +164,45 @@ export default function themeit(opts) {
         } else {
           const loadedStyles = [];
 
-          const styleLoaded = (...addedStyles) => {
+          const styleLoaded = (index, ...addedStyles) => {
+            const stylesCache = { index, styles: [] };
             const len = addedStyles.length;
             const hasHot = len > 0 && typeof addedStyles[len - 1] === 'boolean';
 
-            if (hasHot) {
-              if (addedStyles[len - 1]) {
-                this.loadTheme(this.props);
-                return;
-              }
+            if (hasHot && addedStyles[len - 1]) {
+              this.loadTheme(this.props);
+              return;
             }
 
             addedStyles.forEach((s, i) => {
               if (i < len - (hasHot ? 2 : 0)) {
-                loadedStyles.push(s);
+                stylesCache.styles.push(s);
               }
             });
 
-            if (loadedStyles.length >= stylesToLoad) this.setStyles(...loadedStyles);
+            loadedStyles.push(stylesCache);
+
+            if (loadedStyles.length >= stylesToLoad) {
+              loadedStyles.sort((a, b) => b.index < a.index);
+
+              const normalizedStyles = loadedStyles.reduce((acc, cache) => {
+                acc = acc.concat(cache.styles);
+                return acc;
+              }, []);
+
+              this.setStyles(normalizedStyles);
+            }
           };
 
-          styles.forEach((style) => {
+          styles.forEach((style, index) => {
             invariant(style, `${TargetComponent.displayName} has no theme "${theme}"!`);
 
             switch (typeof style) {
               case 'function':
-                style(styleLoaded);
+                style(styleLoaded.bind(this, index));
                 break;
               case 'object':
-                styleLoaded(addJsCss(style));
+                styleLoaded(index, addJsCss(style));
                 break;
               default: break;
             }

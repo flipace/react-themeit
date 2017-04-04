@@ -31,4 +31,45 @@ storiesOf('Label', module)
     theme="blue"
     addStyleFiles={cb => require(['./additional.css'], cb)}
   >Hello world.</Label>
-));
+))
+.add('fancy stuff', () => {
+  class DemoFancy extends React.Component {
+    constructor(props) {
+      super(props);
+
+      this.state = {
+        theme: 'blue',
+      };
+    }
+
+    change = () => {
+      const themes = [
+        'blue',
+        '',
+        'blue huge',
+        'huge',
+      ];
+
+      const randomIndex = Math.round(Math.random() * (themes.length - 1));
+
+      this.setState({ theme: themes[randomIndex] });
+    }
+
+    render() {
+      const { theme } = this.state;
+
+      return (
+        <div>
+          <Label
+            theme={theme}
+          >
+            Hello world.
+          </Label>
+          <button onClick={this.change}>Change</button>
+        </div>
+      );
+    }
+  }
+
+  return <DemoFancy />;
+});
