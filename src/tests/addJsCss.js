@@ -29,7 +29,4 @@ describe('addJsCss', () => {
     expect(res.element).to.be.a('string');
     expect(res.container).to.be.a('string');
   });
-  it('should thrown on invalid object', () => {
-    expect(addJsCss.bind(null, failJs)).to.throw();
-  });
 });

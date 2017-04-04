@@ -84,4 +84,20 @@ describe('themeit', () => {
 
     expect(html).to.contain('container_1 container_2');
   });
+
+  it('should not throw an error for empty css objects', () => {
+    const BaseComponent = ({ styles }) => (<div className={styles.container}>I'm react-themeit'</div>);
+
+    const options = {
+      base: cb => cb(require('./styles/test1')),
+      themes: {
+        red: {}
+      }
+    };
+
+    const Themed = themeit(options)(BaseComponent);
+    const element = <Themed theme="red" />;
+
+    expect(mount.bind(this, element)).to.not.throw(Error);
+  });
 });
