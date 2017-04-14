@@ -1,11 +1,12 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import themeit from '../themeit';
 
 const themeOptions = {
-  base: cb => require(['./base.css'], cb),
+  base: cb => cb(require('./base.css')),
   themes: {
-    huge: cb => require(['./themes/huge.css'], cb),
-    blue: cb => require(['./themes/blue.css'], cb),
+    huge: cb => cb(require('./themes/huge.css')),
+    blue: cb => cb(require('./themes/blue.css')),
   },
 };
 

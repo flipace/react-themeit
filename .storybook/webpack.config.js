@@ -8,6 +8,9 @@ const path = require('path');
 const updateConfig = require('./user/modify_webpack_config');
 
 const config = {
+  output: {
+    publicPath: '/react-themeit/static/'
+  },
   module: {
     loaders: [
       {
