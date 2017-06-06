@@ -6,5 +6,5 @@ export default function parseThemes(themeString, themes) {
 
   const split = themeString.split(' ');
 
-  return split.map(theme => themes[theme].trim());
+  return split.map(theme => themes[theme.trim()]);
 }
