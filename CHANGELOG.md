@@ -1,5 +1,9 @@
 # Change Log
 
+### v2.2.0
+- remove invariant for nonavailable themes
+- fix issue where theme names would not be trimmed resulting in seemingly non-existent themes
+
 ### v1.2.1
 - **changed** when merging context styles, put existing context styles at the beginning
 

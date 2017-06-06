@@ -57,8 +57,7 @@
     "prop-types": "^15.5.8"
   },
   "dependencies": {
-    "babel-runtime": "^6.23.0",
-    "invariant": "^2.2.2"
+    "babel-runtime": "^6.23.0"
   },
   "main": "dist/index.js",
   "engines": {

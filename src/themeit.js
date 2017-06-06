@@ -1,6 +1,5 @@
 import { Component, createElement } from 'react';
 import PropTypes from 'prop-types';
-import invariant from 'invariant';
 
 import addJsCss from './functions/addJsCss';
 import parseThemes from './functions/parseThemes';
@@ -196,7 +195,9 @@ export default function themeit(opts) {
           };
 
           styles.forEach((style, index) => {
-            invariant(style, `${TargetComponent.displayName} has no theme "${theme}"!`);
+            if (typeof style === 'undefined' || style === '' || style === false) {
+              console.warn(`${TargetComponent.displayName} has no theme "${theme}"!`);
+            }
 
             switch (typeof style) {
               case 'function':
