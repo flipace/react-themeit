@@ -38,11 +38,8 @@ export default function themeit(opts) {
       static displayName = `ThemeIt(${TargetComponent.displayName})`;
 
       static propTypes = {
-         // name of the theme to use
-        theme: PropTypes.oneOfType([
-          PropTypes.string,
-          PropTypes.bool,
-        ]),
+        // name of the theme to use
+        theme: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
         // optional jscss styles to be added
         // (will be appended to head with aphrodite)
         styles: PropTypes.object, // eslint-disable-line
@@ -56,11 +53,11 @@ export default function themeit(opts) {
       static defaultProps = {
         theme: options.default || false,
         mergeContext: false,
-      }
+      };
 
       static contextTypes = {
         styles: PropTypes.object,
-      }
+      };
 
       static childContextTypes = {
         styles: PropTypes.object,
@@ -68,6 +65,8 @@ export default function themeit(opts) {
 
       constructor(props, context) {
         super(props, context);
+
+        this.prevContext = context;
 
         this._isMounted = false;
 
@@ -87,16 +86,15 @@ export default function themeit(opts) {
         this.loadTheme(this.props);
       }
 
-      componentDidUpdate(prevProps, prevState, prevContext) {
+      componentDidUpdate(prevProps) {
         if (
           prevProps.theme !== this.props.theme ||
-          (
-            (options.mergeContext || this.props.mergeContext) &&
-            JSON.stringify(prevContext.styles) !== JSON.stringify(this.context.styles)
-          )
+          ((options.mergeContext || this.props.mergeContext) &&
+            JSON.stringify(this.prevContext.styles) !== JSON.stringify(this.context.styles))
         ) {
           this.loadTheme(this.props);
         }
+        this.prevContext = this.context;
       }
 
       componentWillUnmount() {
@@ -136,10 +134,7 @@ export default function themeit(opts) {
         if (base) styles.push(base);
 
         // add styles from defined themes to our styles array
-        styles = [
-          ...styles,
-          ...parseThemes(theme, themes),
-        ];
+        styles = [...styles, ...parseThemes(theme, themes)];
 
         // if addStyleFiles is defined, push the addStyleFiles function to the styles array
         if (props.addStyleFiles) {
@@ -149,8 +144,10 @@ export default function themeit(opts) {
         // if addStyleFiles is defined, push the addStyleFiles function to the styles array
         if (props.addFiles) {
           // eslint-disable-next-line
-          console.warn("(react-themeit) 'addFiles' is deprecated and will be removed " +
-            "in the next major version. Use 'addStyleFiles' instead.");
+          console.warn(
+            "(react-themeit) 'addFiles' is deprecated and will be removed " +
+              "in the next major version. Use 'addStyleFiles' instead.",
+          );
           styles.push(props.addFiles);
         }
 
@@ -206,25 +203,25 @@ export default function themeit(opts) {
               case 'object':
                 styleLoaded(index, addJsCss(style));
                 break;
-              default: break;
+              default:
+                break;
             }
           });
         }
-      }
+      };
 
       render() {
         const { loadedTheme, styles } = this.state;
 
         if (loadedTheme || themeCount <= 0) {
-          return createElement(
-            TargetComponent,
-            {
-              ...this.props,
-              styles,
-              themeit: this.getthemeitProps(),
-              ref: (targetComponent) => { this.targetComponent = targetComponent; },
+          return createElement(TargetComponent, {
+            ...this.props,
+            styles,
+            themeit: this.getthemeitProps(),
+            ref: (targetComponent) => {
+              this.targetComponent = targetComponent;
             },
-          );
+          });
         }
 
         return null;

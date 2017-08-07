@@ -1,5 +1,7 @@
 import React from 'react';
 import ComponentB from './ComponentB';
+import PropTypes from 'prop-types';
+
 import { themeit } from '../index';
 
 const themeOptions = {
@@ -26,8 +28,8 @@ const ComponentA = props => (
 
 ComponentA.displayName = 'ComponentA';
 ComponentA.propTypes = {
-  styles: React.PropTypes.object,
-  children: React.PropTypes.node,
+  styles: PropTypes.object,
+  children: PropTypes.node,
 };
 
 export default themeit(themeOptions)(ComponentA);

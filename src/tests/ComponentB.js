@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 
 import { themeit } from '../index.js';
 
@@ -15,7 +17,7 @@ const ComponentB = props => (
 
 ComponentB.displayName = 'ComponentB';
 ComponentB.propTypes = {
-  styles: React.PropTypes.object,
+  styles: PropTypes.object,
 };
 
 export default themeit(themeOptions)(ComponentB);
