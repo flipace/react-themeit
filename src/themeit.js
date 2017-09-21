@@ -33,9 +33,10 @@ export default function themeit(opts) {
 
   const themeCount = Object.keys(options.themes).length;
 
-  return (TargetComponent) => {
+  return function (TargetComponent) {
     class ThemeIt extends Component {
       static displayName = `ThemeIt(${TargetComponent.displayName})`;
+      static themeitOptions = options;
 
       static propTypes = {
         // name of the theme to use
