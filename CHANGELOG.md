@@ -1,5 +1,8 @@
 # Change Log
 
+### v2.3.0
+- adds "themeitOptions" key to the generated component for easy access to the passed themeit options
+
 ### v2.2.0
 - remove invariant for nonavailable themes
 - fix issue where theme names would not be trimmed resulting in seemingly non-existent themes
