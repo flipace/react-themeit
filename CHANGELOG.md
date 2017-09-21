@@ -1,6 +1,6 @@
 # Change Log
 
-### v2.3.0
+### v2.4.0
 - adds "themeitOptions" key to the generated component for easy access to the passed themeit options
 
 ### v2.2.0
