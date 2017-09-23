@@ -185,9 +185,6 @@ In this case, only the `base` .less will be hot reloadable.
 The `hot` function automatically checks whether module.hot is
 defined and only enables HMR if it is.
 
-### Roadmap
-- implement automatic generation of react-storybook stories
-
 ### About
 ![](http://ovosplay.com/img/ovosplay.png)
 
