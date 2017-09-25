@@ -81,6 +81,18 @@ A component which is wrapped with *themeit* accepts these additional props:
 The target component will receive the combined style classes in a property called `styles`.
 It will also receive a prop named `themeit` which contains all options you passed to *themeit* and a function `setTheme(name)` which you can invoke to change the current theme of the component.
 
+### Automatic Storybook stories generation
+
+If you use [storybook](https://storybook.js.org/) you can use the babel plugin [generate-stories](https://github.com/flipace/babel-plugin-generate-stories) to automatically generate stories for each of your components themes. Simply set the ```"withThemeit"``` option to true, make sure you're using themeit >= 2.4.0 and you're all set!
+
+This will auto generate stories like this:
+
+```
+- theme: theme1
+- theme: theme2
+- theme: theme3
+```
+
 ### Passing style information down to child components
 
 If you want to style nested components, react-themeit makes it super-simple to
@@ -172,9 +184,6 @@ const themeOptions = {
 In this case, only the `base` .less will be hot reloadable.
 The `hot` function automatically checks whether module.hot is
 defined and only enables HMR if it is.
-
-### Roadmap
-- implement automatic generation of react-storybook stories
 
 ### About
 ![](http://ovosplay.com/img/ovosplay.png)
