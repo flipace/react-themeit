@@ -49,11 +49,13 @@ export default function themeit(opts) {
         addStyleFiles: PropTypes.func, // eslint-disable-line
         // should context be merged?
         mergeContext: PropTypes.bool,
+        ...(TargetComponent.propTypes || {}),
       };
 
       static defaultProps = {
         theme: options.default || false,
         mergeContext: false,
+        ...(TargetComponent.defaultProps || {}),
       };
 
       static contextTypes = {
@@ -229,6 +231,11 @@ export default function themeit(opts) {
       }
     }
 
+    if (TargetComponent.propTypes) {
+      ThemeIt.propTypes = {
+        ...TargetComponent.propTypes
+      }
+    }
     return ThemeIt;
   };
 }
