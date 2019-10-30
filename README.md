@@ -12,8 +12,6 @@ load only the themes you need at a time by utilizing code splitting.
 You can also pass in a JS style object for themes which will be processed
 automatically with [aphrodite](https://github.com/Khan/aphrodite).
 
-[Documentation](http://neschkudla.at/react-themeit/)
-
 ## Installation
 
 ```Shell
