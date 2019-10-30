@@ -2,9 +2,10 @@ language: node_js
 sudo: true
 dist: trusty
 node_js:
-  - "6.0"
-  - "7.0"
-  - "8.0"
+  - "9.0"
+  - "10.0"
+  - "11.0"
+  - "12.0"
 install:
   - npm i -g npm
   - npm install
