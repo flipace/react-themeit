@@ -2,7 +2,6 @@ language: node_js
 sudo: true
 dist: trusty
 node_js:
-  - "9.0"
   - "10.0"
   - "11.0"
   - "12.0"
